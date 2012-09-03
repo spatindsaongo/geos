@@ -1,0 +1,26 @@
+{#% block point_widget %}
+{% spaceless %}
+    <div {{ block('widget_container_attributes') }}>
+    {% for child in form %}
+        <div>
+            {{ form_label(child) }}
+    		{{ form_widget(child) }}
+         </div>
+    {% endfor %}
+    </div>
+{% endspaceless %}
+{% endblock %#}
+
+{% block location_widget %}
+{% spaceless %}
+	{% set i = 0 %}
+    <div {{ block('widget_container_attributes') }}>
+    {% for child in form %}
+        <div id = "location{{ i }}">
+    		{{ form_widget(child,{'attr':{'onChange':('getChildLocation'~i~"()")}}) }}
+         </div>
+    {% set i = i+1 %}
+    {% endfor %}
+    </div>
+{% endspaceless %}
+{% endblock %}

@@ -1,0 +1,44 @@
+GeosAlimentaireBundle:
+    resource: "@GeosAlimentaireBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+GeosSanteBundle:
+    resource: "@GeosSanteBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+GeosEducationBundle:
+    resource: "@GeosEducationBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+GeosAssainissementBundle:
+    resource: "@GeosAssainissementBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+GeosEauBundle:
+    resource: "@GeosEauBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+GeosGeoEntityBundle:
+    resource: "@GeosGeoEntityBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+GeosMainBundle:
+    resource: "@GeosMainBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+GeosUserBundle:
+    resource: "@GeosUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+# Internal routing configuration to handle ESI
+#_internal:
+#   resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
+#   prefix:   /_internal

@@ -1,0 +1,38 @@
+{% extends 'GeosMainBundle::layout.html.twig' %}
+{% block content %}
+<h2 class="page-header">Ajouter un résultat d'examen</h2>
+
+<form class="form-horizontal" action="{{ path('resultatexamen_create') }}" method="post" {{ form_enctype(form) }}>
+  <fieldset>
+  	  	
+  	 <div class="control-group">
+      <label class="control-label" for="input01">Centre de formation</label>
+      <div class="controls">
+        {{ form_widget(form.classe) }}
+      </div>
+    </div>
+  	<div class="control-group">
+      <label class="control-label" for="input01">Libellé</label>
+      <div class="controls">
+        {{ form_widget(form.libelle) }}
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="input01">Effectif Feminin</label>
+      <div class="controls">
+        {{ form_widget(form.admisFeminin) }}
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="input01">Effectif Masculin</label>
+      <div class="controls">
+        {{ form_widget(form.admisMasculin)}}
+      </div>
+    </div>
+    <div class="form-actions">
+    	<button class="btn btn-primary" type="submit" class="input-xlarge" >Enregistrer</button>
+    	<a class="btn" href="{{ path('centreformation_show', { 'id': cfId }) }}"><i class=" icon-arrow-left"></i>Annuler</a>
+    </div>
+  </fieldset>
+</form>
+{% endblock %}

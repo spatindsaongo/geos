@@ -1,0 +1,18 @@
+{% extends 'GeosMainBundle::layout.html.twig' %}
+{% block content %}
+<h2 class="page-header">Ajouter</h2>
+
+<form class="form-horizontal" action="" method="post" {{ form_enctype(form) }}>
+  <fieldset>
+    <div class="control-group">
+      <label class="control-label" for="input01"></label>
+      <div class="controls" >
+      </div>
+    </div>
+    <div class="form-actions">
+    	<button class="btn btn-primary" type="submit" class="input-xlarge" >Enregistrer</button>
+    	<a class="btn" href="{{ path('') }}"><i class=" icon-arrow-left"></i>Retourner à la liste</a>
+    </div>
+  </fieldset>
+</form>
+{% endblock %}

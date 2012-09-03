@@ -1,0 +1,53 @@
+<div id = "map" class = "well" style="height : 450px"> 
+<script type="text/javascript">
+
+
+	/*Paramètres d'affichage de la carte*/
+	
+	var center = new Array(),
+		marqueurs = new Array(),
+		covers = new Array(),
+		scale = 0;
+
+	
+	/*Initialisation des variables de la carte*/
+	/*Test de la variable mapcenter*/
+		
+   		{%  if mapcenter.lon is defined and mapcenter.lat is defined  %}
+			{% if mapcenter.lon and mapcenter.lat %}
+  	    	center = new Array({{ mapcenter.lon }},{{ mapcenter.lat }});
+  	    	{% endif %}
+  	  	{% endif %}
+  	  	
+	/*Les markers*/
+  	    {%  if markers is defined %}
+  	  		{%  set i=0 %}
+  			{%  for marker in markers%}  			
+		  	    {% autoescape false %}		  	    
+		  	  		marqueurs[{{ i }}] = [{{ marker.coord.lon}},{{ marker.coord.lat }},'{{ marker.info }}'];
+		  	    {% endautoescape %}
+		  	{%  set i = i+1 %}
+  	    	{%  endfor %}  	    	
+  	 	{% endif %}
+  	 	
+  	/*Les covers*/
+  	  	{%  if covers is defined %}
+  	  		var covers = new Array();
+  	  		{%  set i=0 %}
+  			{%  for cover in covers %}  			
+		  	    {% autoescape false %}		  	    
+		  	  		covers[{{ i }}] = ['{{ cover }}'];
+		  	    {% endautoescape %}
+		  	{%  set i = i+1 %}
+  	    	{%  endfor %}  	    	
+  	 	{% endif %}
+
+  	 /* Le scale */
+  	 {% if scale is defined  %}
+  	 	    scale = {{ scale }};
+  	 {% endif %}
+  	 	
+  	 	
+    	map(covers, marqueurs, center, scale);
+</script> 
+</div>

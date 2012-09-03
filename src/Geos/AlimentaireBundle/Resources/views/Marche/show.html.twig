@@ -1,0 +1,33 @@
+{% extends 'GeosMainBundle::layout.html.twig' %}
+{% block content %}
+<h2 class="page-header">Vue détaillée du marché
+	<div style="float: right;" class="btn-group">
+		<a class="btn" href="{{ path('marche') }}">
+			<i class=" icon-arrow-left"></i>
+			Retour à liste
+		</a>
+	    <a class="btn" href="{{ path('marche_edit', { 'id': entity.id }) }}">
+	    	<i class=" icon-edit"></i>
+	        Modifier
+	    </a>
+	   	<a class="btn" href="">
+	    	<i class=" icon-print"></i>
+	        imprimer
+	    </a>
+    </div>
+</h2>
+</div>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="well span4">
+	    <p><strong>Identifant : </strong>{{ entity.id }}</p>
+		<p><strong>Nom : </strong>{{ entity.nom }}</p>
+	    <p><strong>Commune : </strong>{{ entity.zoi }}</p>
+    </div>
+    <div class="span7" >
+    	{% include 'GeosGeoEntityBundle::map00.html.twig' %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

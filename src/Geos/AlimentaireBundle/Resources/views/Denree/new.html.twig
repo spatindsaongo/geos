@@ -1,0 +1,26 @@
+{% extends 'GeosMainBundle::layout.html.twig' %}
+{% block content %}
+<h2 class="page-header">Ajouter une denree</h2>
+
+<form class="form-horizontal" action="{{ path('denree_create') }}" method="post" {{ form_enctype(form) }}>
+  <fieldset>
+    <div class="control-group">
+      <label class="control-label" for="input01">Libellé</label>
+      <div class="controls" >
+        {{ form_widget(form.libelle,{"attr":{"class":"input-xlarge"}}) }}
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="input01">Categorie</label>
+      <div class="controls">
+        {{ form_widget(form.categorie)}}
+      </div>
+    </div>
+    <div class="form-actions">
+    	<button class="btn btn-primary" type="submit" class="input-xlarge" >Enregistrer</button>
+    	<a class="btn" href="{{ path('denree') }}"><i class=" icon-arrow-left"></i>Retourner à la liste</a>
+    </div>
+  </fieldset>
+</form>
+
+{% endblock %}

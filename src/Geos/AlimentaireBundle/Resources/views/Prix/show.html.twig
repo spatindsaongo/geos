@@ -1,0 +1,37 @@
+<h1>Prix</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Valeur</th>
+            <td>{{ entity.valeur }}</td>
+        </tr>
+        <tr>
+            <th>Datevaleur</th>
+            <td>{{ entity.dateValeur|date('Y-m-d H:i:s') }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('prix') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('prix_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('prix_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

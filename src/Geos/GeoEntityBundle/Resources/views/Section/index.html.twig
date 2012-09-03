@@ -1,0 +1,53 @@
+{% extends 'GeosMainBundle::entityManagement.html.twig' %}
+{% block entityManagement %}
+<h2 class="page-header" > Section : {{ pagination.totalCount }} élements dans la liste
+	<div style="float: right;" class="btn-group">
+	<a class="btn btn-primary" href="{{ path('section_new') }}">
+		<i class="icon-plus-sign icon-white"></i>
+		ajouter
+	</a>
+	<a class="btn" href="#">
+    	<i class=" icon-print"></i>
+        imprimer
+    </a>
+    </div>
+</h2>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>{{ pagination.sortable('Numero', 'section.numero')|raw }}</th>
+            <th>Commune</th>
+            <th>Province</th>
+            <th>Region</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in pagination %}
+        <tr>
+            <td><a href="{{ path('section_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.numero }}</td>
+            <td>{{ entity.commune }}</td>
+            <td>{{ entity.commune.province }}</td> 
+            <td>{{ entity.commune.province.region }}</td>             
+            <td>
+            	<p>
+	                <a href="{{ path('section_show', { 'id': entity.id }) }}" title="Voir">
+	                <i class="icon-eye-open"></i>
+	                </a>
+	                <a href="{{ path('section_edit', { 'id': entity.id }) }}" title="Modifier">
+	                <i class="icon-edit"></i>
+	                </a>
+	               	<a href="{{ path('section_delete', { 'id': entity.id }) }}" title="Supprimer">
+	                <i class="icon-trash"></i>
+	                </a>
+                </p>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{{ pagination.render()|raw }}
+{% endblock %}

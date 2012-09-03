@@ -1,0 +1,46 @@
+{% extends 'GeosMainBundle::layout.html.twig' %}
+{% block content %}
+<h2 class="page-header">Ajouter une prix</h2>
+
+<form class="form-horizontal" action="{{ path('prix_create') }}" method="post" {{ form_enctype(form) }}>
+  <fieldset>
+    <div class="control-group">
+      <label class="control-label" for="input01">Denrée</label>
+      <div class="controls" >
+        {{ form_widget(form.denree,{"attr":{"class":"input-xlarge"}}) }}
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="input01">Marche</label>
+      <div class="controls">
+        {{ form_widget(form.marche)}}
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="input01">Montant</label>
+      <div class="controls">
+        {{ form_widget(form.valeur)}}
+        <p>En FCFA</p>
+      </div>
+      
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="input01">Unité de Mesure</label>
+      <div class="controls">
+        {{ form_widget(form.uniteMesure)}}
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="input01">Date et Heure</label>
+      <div class="controls">
+        {{ form_widget(form.dateValeur)}}
+      </div>
+    </div>
+    <div class="form-actions">
+    	<button class="btn btn-primary" type="submit" class="input-xlarge" >Enregistrer</button>
+    	<a class="btn" href="{{ path('prix') }}"><i class=" icon-arrow-left"></i>Retourner à la liste</a>
+    </div>
+  </fieldset>
+</form>
+
+{% endblock %}

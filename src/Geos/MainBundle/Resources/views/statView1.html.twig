@@ -1,0 +1,187 @@
+	<!-- Affichage des élements présentation de l'indicateur-->
+	
+	<!-- Titre de l'indicateur -->
+	<h1 class = "geos-page-title">{{ indicTitle }}</h1>	
+	<!-- Fin du titre -->
+	
+	<div  class="accordion">
+	<!-- Paramètres de presentation de l'indicateur  -->		
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<a class="accordion-toggle geos-accordion-heading" data-toggle="collapse" href="#parameter">
+					<i class="icon-th icon-white"></i> 
+				    <span class="geo-divider-vertical"></span> 
+				    Parametres
+				    <i class="icon-chevron-down icon-white pull-right"></i>
+				</a>
+			</div>
+			<div class="accordion-body in" id="parameter" style="height:auto;" >
+				<div class="accordion-inner">
+					<form class="form-horizontal accordion inner"  action="{{ path(postPath) }}" method="post" {{ form_enctype(form) }}>
+						<fieldset>
+							<div class="control-group">
+								<label class="control-label" for="input01">Periode</label>
+								<div class="controls">
+									{{ form_widget(form.interval) }}									
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="input01">Date de debut</label>
+								<div class="controls">
+									{{ form_widget(form.dateDebut) }}								
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="input01">Occurences</label>
+								<div class="controls">
+									{{ form_widget(form.occurences) }}									
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">Hierarchie</label>
+								<div class="controls">
+								{{ form_widget(form.hierarchie,{"attr":{"onChange":"getZone()"}}) }}
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">Zone</label>
+								<div class="controls">
+								{{ form_widget(form.zone,{"attr":{"class":"input-medium"}}) }}
+								<p class="help-block">Ne pas selectionner plus de region</p>
+								</div>
+							</div>
+				    		<div class="form-actions">
+					    		<button type="submit" class="btn btn-primary">soumettre</button>
+					    		<button type="reset"  class="btn">Effacer</button>
+					    	</div>
+				    	</fieldset>
+				    </form>
+			    </div>
+		    </div>
+	    </div>  
+	 </div>
+    <!-- Fin des paramètres de presentation de l'indicateur  -->
+    
+	<!-- Affichage de la carte -->
+	{% if table %}
+	<div  class="accordion">
+		<div class="accordion-group">
+		    <div class="accordion-heading">
+			    <a href="#map_widget" data-toggle="collapse" class="accordion-toggle geos-accordion-heading">
+				    <i class="icon-th icon-white"></i> 
+				    <span class="geo-divider-vertical"></span> 
+				    Carte
+				    <i class="icon-chevron-down icon-white pull-right"></i>
+			    </a>
+		    </div>
+	     	<div class="accordion-body collapse in" id="map_widget">
+	        	 <div class="accordion-inner">
+	        	 	<ul class="nav nav-tabs">
+	        	 	{% set i = 0 %}
+	        	 	{% for row in table.periode %}
+						<li {% if i==0 %}class="active"{% endif %}><a href="#tab-map{{ i }}" data-toggle="tab">{{ row.value }}</a></li>
+					{% set i = i+1 %}
+					{% endfor %}
+					</ul>
+					<div class="tab-content">
+					{% set s = 0 %}
+	        	 	{% for periode in table.periode %}
+	        	 		{% set covers=[] %}
+	        	 		{% for key,row in table.zone %}	        	 			
+	        	 			{% set covers=covers|merge({(key):{coord:row.coord, colorCode:row.indic[s].colorCode, zoneName:row.zoneName}})   %}
+	        	 		{% endfor %}
+	        	 	 	<div class="tab-pane{% if s==0 %} active{% endif %}" id="tab-map{{ s }}">{% include 'GeosGeoEntityBundle::map01.html.twig' with {'blocId': 'mapBloc'~s , 'statCovers':covers, 'id':s} %}
+	        	 	 		<hr>
+	        	 	 		<div class ="row-fluid">
+	        	 	 		 	<div class = "span2">
+	        	 	 		 		<p><strong>Légende</strong></p>
+	        	 	 		 	</div>
+	        	 	 		 	{% for legende in periode.legende %}
+	        	 	 		 	<div class = "span1">
+	        	 	 		 		<div style = "background: {{ legende.colorCode }}; width:15px; height: 10px "></div>
+	        	 	 		 		<p> {{ legende.interval }}</p>
+	        	 	 		 	</div>
+	        	 	 			{% endfor %}
+	        	 	 		</div>
+	        	 	 	</div>
+						
+	        	 		{% set s = s+1 %}
+						
+					{% endfor %}	        	 	
+	        	 	</div>
+	             </div>
+	        </div>
+	    </div>
+    </div>
+	<!-- Fin d'affichage de la carte -->	
+	
+	<!-- Affichage de la courbe -->	
+	<div class="accordion">
+		<div class="accordion-group">
+		    <div class="accordion-heading">
+			    <a href="#graph_widget" data-toggle="collapse" class="accordion-toggle geos-accordion-heading">
+				    <i class="icon-th icon-white"></i> 
+				    <span class="geo-divider-vertical"></span> 
+				    Graphe
+				    <i class="icon-chevron-down icon-white pull-right"></i>
+			    </a>
+		    </div>
+	     	<div class="accordion-body collapse in" id="graph_widget">
+	        	 <div class="accordion-inner" id = "graph1">
+	             </div>
+	        </div>
+	    </div>
+	</div>
+	<!-- Fin d'affichage de la courbe -->
+	
+	
+	<!-- Affiche du tableau -->
+	<div class="accordion">
+		<div class="accordion-group">
+		    <div class="accordion-heading">
+			    <a href="#table_widget" data-toggle="collapse" class="accordion-toggle geos-accordion-heading">
+				    <i class="icon-th icon-white"></i> 
+				    <span class="geo-divider-vertical"></span> 
+				    Tableau
+				    <i class="icon-chevron-down icon-white pull-right"></i>
+			    </a>
+		    </div>
+	     	<div class="accordion-body collapse in" id="table_widget">
+	        	 <div class="accordion-inner">
+			        <table class="table">
+						<thead>
+							<tr>
+							<td></td>
+							{% for row in table.periode %}
+								<th scope = "col" >{{ row.value }}</th>
+							{% endfor %}
+							</tr>
+						</thead>				
+						<tbody>
+							{% for row in table.zone %}
+							<tr>
+							<th scope="row">{{ row.zoneName }}</th>
+								{%  for indic in  row.indic %}
+									<td>{{ indic.value }}</td>	
+								{%  endfor %}
+							</tr>
+							{% endfor %}
+						</tbody>
+						<tfoot>
+						</tfoot>
+					</table>
+	             </div>
+	        </div>
+	    </div>
+	</div>
+	{% endif %}
+	<!-- Fin d'affiche du tableau -->
+	</div>
+
+	<script type="text/javascript">
+	$(function(){
+		$('table').visualize({type : 'line', width: '850'})
+				  .appendTo('#graph1');
+		getZone();
+	});
+	</script>

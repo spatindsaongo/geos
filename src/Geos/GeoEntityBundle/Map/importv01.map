@@ -1,0 +1,707 @@
+# Map file created from QGIS project file /media/data/Developpement_folder/Burkinamap.qgs
+# Edit this file to customize for your map interface
+# (Created with PyQgis MapServer Export plugin)
+MAP
+  NAME "QGIS-MAP"
+  # Map image size
+  SIZE 500 500
+  UNITS kilometers
+
+  EXTENT -113933.598723 902182.897546 1649113.592409 1918094.845249
+  FONTSET './fonts/fonts.txt'
+  #SYMBOLSET './symbols/symbols.txt'
+  PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+  END
+
+  # Background color for the map canvas -- change as desired
+  IMAGECOLOR 244 243 240
+  IMAGEQUALITY 95
+  IMAGETYPE png
+
+  OUTPUTFORMAT
+    NAME png
+    DRIVER 'GD/PNG'
+    MIMETYPE 'image/png'
+    IMAGEMODE RGBA
+    EXTENSION 'png'
+  END
+  # Legend
+  LEGEND
+      IMAGECOLOR 255 255 255
+    STATUS ON
+    KEYSIZE 18 12
+    LABEL
+      TYPE BITMAP
+      SIZE MEDIUM
+      COLOR 0 0 89
+    END
+  END
+
+  # Web interface definition. Only the template parameter
+  # is required to display a map. See MapServer documentation
+  WEB
+    # Set IMAGEPATH to the path where MapServer should
+    # write its output.
+    IMAGEPATH '/tmp/'
+
+    # Set IMAGEURL to the url that points to IMAGEPATH
+    # as defined in your web server configuration
+    IMAGEURL '/tmp/'
+
+    # WMS server settings
+    METADATA
+      'wms_title'           'QGIS-MAP'
+      'wms_onlineresource'  'http://localhost/cgi-bin/mapserv?map=/var/www/sigdass/map/importv01.map'
+      'wms_srs'             'EPSG:4326'
+    END
+
+    #Scale range at which web interface will operate
+    # Template and header/footer settings
+    # Only the template parameter is required to display a map. See MapServer documentation
+    TEMPLATE 'fooOnlyForWMSGetFeatureInfo'
+  END
+
+# 00 Couche des regions
+  LAYER
+    NAME 'region'
+    TYPE POLYGON
+    DUMP true
+    
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    
+    CONNECTIONTYPE postgis
+    CONNECTION "user=postgres password=lk2xFNyA dbname=gisdass host=localhost"
+    DATA"geometrie from region using srid=4326 using unique id"
+    
+    METADATA
+      'wms_title' 'region'
+    END
+    
+    STATUS OFF
+    
+    PROCESSING "LABEL_NO_CLIP=True"
+    #MAXSCALEDENOM 
+    
+    MINSCALEDENOM 10000000000
+    OPACITY 100
+    
+    LABELITEM "nom"
+    #LABELMAXSCALEDENOM 100000000000
+    LABELMINSCALEDENOM 1000000000
+    
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    
+    CLASS
+       NAME 'region' 
+       STYLE
+            COLOR 244 243 240     	
+       END
+       STYLE 
+            OUTLINECOLOR 187 187 183
+            WIDTH 1.5
+            PATTERN 40 10 40 10 END    		
+       END
+       LABEL
+       	  ALIGN center
+	      FONT FreeSerif
+	      TYPE truetype
+	      SIZE 5
+	      COLOR 0 0 0
+	      ANGLE 0
+	      BUFFER 1
+	      POSITION auto
+	      FORCE true
+	      ANTIALIAS true
+	      PARTIALS true
+	   END
+    END
+
+    
+  END
+
+# 01 Couche de la commune
+  LAYER
+  
+    NAME 'commune'
+    TYPE POLYGON
+    DUMP true
+    
+    CONNECTIONTYPE postgis
+    CONNECTION "user=postgres password=lk2xFNyA dbname=gisdass host=localhost"
+    DATA"geometrie from commune using srid=4326 using unique id"
+    
+    METADATA
+      'ows_title' 'commune'
+    END
+    STATUS OFF
+    
+
+    TRANSPARENCY 40
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    
+    PROCESSING "LABEL_NO_CLIP=True"
+    LABELITEM "nom"
+    LABELMAXSCALEDENOM 100000000000
+    LABELMINSCALEDENOM 100000
+    
+    
+    CLASS
+       NAME 'commune' 
+       STYLE
+            COLOR 244 243 240     	
+       END
+       STYLE 
+            OUTLINECOLOR 187 187 183
+            WIDTH 1.0
+            PATTERN 40 10 40 10 END    		
+       END
+       LABEL
+	      FONT FreeSerif
+	      TYPE truetype
+	      SIZE 7
+	      COLOR 0 0 0
+	      ANGLE 0
+	      BUFFER 1
+	      POSITION cc
+	      FORCE true
+	      ANTIALIAS true
+	      PARTIALS true
+	   END
+    END
+  END
+
+# 02 Couche des arrondissements
+  LAYER
+    NAME 'arrondissement'
+    TYPE POLYGON
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    CONNECTIONTYPE postgis
+    CONNECTION "user=postgres password=lk2xFNyA dbname=gisdass host=localhost"
+    DATA "geometrie from arrondissement using srid=4326 using unique id"
+    METADATA
+      'ows_title' 'arrondissement'
+    END
+    STATUS OFF
+    
+    OPACITY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    
+    MAXSCALEDENOM 100000000000  
+    OPACITY 50
+    
+    PROCESSING "LABEL_NO_CLIP=True"    
+    LABELITEM "nom"
+    LABELMAXSCALEDENOM 50000000000
+    LABELMINSCALEDENOM 1000000
+    
+    CLASS
+       NAME 'arrondissement' 
+       STYLE
+            COLOR 244 200 240     	
+       END
+       STYLE 
+            OUTLINECOLOR 187 187 183
+            WIDTH 1.6
+            PATTERN 40 10 40 10 END    		
+       END
+       LABEL
+	      FONT FreeSerif
+	      TYPE truetype
+	      SIZE 12
+	      COLOR 0 0 0
+	      ANGLE 0
+	      BUFFER 1
+	      POSITION cc
+	      FORCE true
+	      ANTIALIAS true
+	      PARTIALS true
+	   END
+    END
+  END
+
+# 04 Couche des secteurs
+  LAYER
+    NAME 'secteur'
+    TYPE POLYGON
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    #EXTENT 540772.329967 1341197.882119 604704.104175 1378036.971613
+    CONNECTIONTYPE postgis
+    CONNECTION "user=postgres password=lk2xFNyA dbname=gisdass host=localhost"
+    DATA"geometrie from secteur using srid=4326 using unique id"
+    METADATA
+      'ows_title' 'secteur'
+    END
+    STATUS OFF  
+    MAXSCALEDENOM 100000000000  
+    OPACITY 50
+    
+    PROCESSING "LABEL_NO_CLIP=True"    
+    LABELITEM "numero"
+    LABELMAXSCALEDENOM 50000000000
+    LABELMINSCALEDENOM 1000000
+    
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    CLASS
+       NAME 'secteur' 
+       STYLE
+            COLOR 244 200 240     	
+       END
+       STYLE 
+            OUTLINECOLOR 187 187 183
+            WIDTH 1.3
+            PATTERN 40 10 40 10 END    		
+       END
+       LABEL
+	      FONT FreeSerif
+	      TYPE truetype
+	      SIZE 6
+	      COLOR 0 0 0
+	      ANGLE 0
+	      BUFFER 1
+	      POSITION cc
+	      FORCE true
+	      ANTIALIAS true
+	      PARTIALS true
+	   END
+    END
+  END
+
+# 03 Couche des sections
+  LAYER
+    NAME 'section'
+    TYPE POLYGON
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    #EXTENT 540772.329967 1341197.882119 604704.104175 1378036.971613
+    CONNECTIONTYPE postgis
+    CONNECTION "user=postgres password=lk2xFNyA dbname=gisdass host=localhost"
+    DATA "geometrie from section using srid=4326 using unique id"
+    METADATA
+      'ows_title' 'section'
+    END
+    STATUS OFF
+    OPACITY 50
+    MAXSCALEDENOM 10000000000
+    
+    
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    
+    PROCESSING "LABEL_NO_CLIP=True" 
+    LABELITEM "numero"
+    LABELMAXSCALEDENOM 10000000000
+    LABELMINSCALEDENOM 1000000
+    
+    CLASS
+       NAME 'section'
+       STYLE
+            COLOR 244 200 240     	
+       END
+       STYLE 
+            OUTLINECOLOR 187 187 183
+            WIDTH 3.0
+            PATTERN 40 10 40 10 END    		
+       END
+       LABEL
+	      FONT FreeSerif
+	      TYPE truetype
+	      SIZE 12
+	      COLOR 0 0 0
+	      ANGLE 0
+	      BUFFER 1
+	      POSITION cc
+	      FORCE true
+	      ANTIALIAS true
+	      PARTIALS true
+	   END
+    END
+  END
+
+
+# 04 Couche des lots
+  LAYER
+    NAME 'lot'
+    TYPE POLYGON
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    #EXTENT 540772.329967 1341197.882119 604704.104175 1378036.971613
+    CONNECTIONTYPE postgis
+    CONNECTION "user=postgres password=lk2xFNyA dbname=gisdass host=localhost"
+    DATA "geometrie from lot using srid=4326 using unique id"
+    METADATA
+      'ows_title' 'lot'
+    END
+    STATUS OFF
+    TRANSPARENCY 52
+    MAXSCALEDENOM 10000000000
+    
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    
+    PROCESSING "LABEL_NO_CLIP=True"
+    LABELITEM "numero"
+    LABELMAXSCALEDENOM 100000000
+    LABELMINSCALEDENOM 1000000
+    
+    CLASS
+       NAME 'lot' 
+       STYLE
+         SYMBOL 0 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 255
+         #COLOR 237 143 75
+       END
+       LABEL
+	      FONT FreeSerif
+	      TYPE truetype
+	      SIZE 12
+	      COLOR 0 0 0
+	      ANGLE 0
+	      BUFFER 1
+	      POSITION cc
+	      FORCE true
+	      ANTIALIAS true
+	      PARTIALS true
+	   END
+    END
+  END
+
+# 05 Couche des parcelles
+  LAYER
+    NAME 'parcelle'
+    TYPE POLYGON
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    CONNECTIONTYPE postgis
+    CONNECTION "user=postgres password=lk2xFNyA dbname=gisdass host=localhost"
+    DATA "geometrie from  parcelle using srid=4326 using unique id"
+    METADATA
+      'ows_title' 'parcelle'
+    END
+    STATUS OFF
+    
+    OPACITY 100
+    MAXSCALEDENOM 10000000000
+    
+    
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    
+    PROCESSING "LABEL_NO_CLIP=True" 
+    LABELITEM "numero"
+    LABELMAXSCALEDENOM 500000000
+
+    CLASS
+       NAME 'parcelle' 
+       STYLE
+            COLOR 244 200 200     	
+       END
+       STYLE 
+            OUTLINECOLOR 187 187 183
+            WIDTH 0.9		
+       END
+       LABEL
+	      FONT FreeSerif
+	      TYPE truetype
+	      SIZE 8
+	      COLOR 0 0 0
+	      ANGLE 0
+	      BUFFER 1
+	      POSITION cc
+	      FORCE true
+	      ANTIALIAS true
+	      PARTIALS true
+	   END
+    END
+  END
+
+
+# Couche des parcelles temporaire chargée
+  LAYER
+    NAME 'tmp_parcelle'
+    TYPE POLYGON
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    CONNECTIONTYPE postgis
+    CONNECTION "user=postgres password=lk2xFNyA dbname=gisdass host=localhost"
+    DATA"the_geom from tmp_parcelle using srid=4326 using unique gid"
+    METADATA
+      'ows_title' 'tmp_parcelle'
+    END
+    STATUS ON
+    TRANSPARENCY 50
+    
+    MAXSCALEDENOM 10000000000
+    
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    
+    PROCESSING "LABEL_NO_CLIP=True"
+    LABELITEM "parcelle"
+    LABELMAXSCALEDENOM 500000000
+    
+    CLASS
+       NAME 'tmp_parcelle' 
+       STYLE
+         SYMBOL 0 
+         SIZE 7.0 
+         OUTLINECOLOR 0 255 0
+         COLOR 39 187 32
+       END
+	     LABEL 
+	      FONT FreeSerif
+	      TYPE truetype
+	      SIZE 10
+	      COLOR 0 0 0
+	      ANGLE 0
+	      BUFFER 1
+	      POSITION cc
+	      FORCE true
+	      ANTIALIAS true
+	      PARTIALS true
+	     END 
+    END
+  END
+
+# Couche des lots temporaires chargé
+
+  LAYER
+    NAME 'tmp_lot'
+    TYPE POLYGON
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    #EXTENT -113933.598723 902182.897546 1649113.592409 1918094.845249
+    #DATA 'PG:dbname='gisdass' host='localhost' port='5432' user='postgres' password='lk2xFNyA' |layername=tmp_parcelle'
+    CONNECTIONTYPE postgis
+    CONNECTION "user=postgres password=lk2xFNyA dbname=gisdass host=localhost"
+    DATA"the_geom from tmp_lot using srid=4326 using unique gid"
+    METADATA
+      'ows_title' 'tmp_lot'
+    END
+    STATUS ON
+    TRANSPARENCY 50
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    
+    PROCESSING "LABEL_NO_CLIP=True"
+    LABELITEM "lot"
+    LABELMAXSCALEDENOM 1000000000
+    LABELMINSCALEDENOM 1000000
+    CLASS
+       NAME 'tmp_lot' 
+       STYLE
+         SYMBOL 0 
+         SIZE 7.0 
+         OUTLINECOLOR 255 255 0
+         COLOR 39 187 255
+       END
+     LABEL 
+      FONT FreeSerif
+      TYPE truetype
+      SIZE 10
+      COLOR 0 0 0
+      ANGLE 0
+      BUFFER 1
+      POSITION cc
+      FORCE true
+      ANTIALIAS true
+      PARTIALS true
+     END 
+    END
+  END
+  
+# Couche des sections temporaires chargé
+
+  LAYER
+    NAME 'tmp_section'
+    TYPE POLYGON
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    #EXTENT -113933.598723 902182.897546 1649113.592409 1918094.845249
+    #DATA 'PG:dbname='gisdass' host='localhost' port='5432' user='postgres' password='lk2xFNyA' |layername=tmp_parcelle'
+    CONNECTIONTYPE postgis
+    CONNECTION "user=postgres password=lk2xFNyA dbname=gisdass host=localhost"
+    DATA"the_geom from tmp_section using srid=4326 using unique gid"
+    METADATA
+      'ows_title' 'tmp_section'
+    END
+    STATUS ON
+    TRANSPARENCY 50
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    
+    PROCESSING "LABEL_NO_CLIP=True"
+    LABELITEM "section"
+    LABELMAXSCALEDENOM 100000000
+    LABELMINSCALEDENOM 1000000
+    CLASS
+       NAME 'tmp_section' 
+       STYLE
+         SYMBOL 0 
+         SIZE 7.0 
+         OUTLINECOLOR 255 255 0
+         COLOR 39 187 255
+       END
+	   LABEL 
+	      FONT FreeSerif
+	      TYPE truetype
+	      SIZE 10
+	      COLOR 0 0 0
+	      ANGLE 0
+	      BUFFER 1
+	      POSITION cc
+	      FORCE true
+	      ANTIALIAS true
+	      PARTIALS true
+	   END 
+    END
+  END
+  
+# Couche des secteurs temporaires chargé  
+  LAYER
+    NAME 'tmp_secteur'
+    TYPE POLYGON
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    CONNECTIONTYPE postgis
+    CONNECTION "user=postgres password=lk2xFNyA dbname=gisdass host=localhost"
+    DATA "the_geom from tmp_secteur using srid=4326 using unique gid"
+    METADATA
+      'ows_title' 'tmp_secteur'
+    END
+    STATUS ON
+    TRANSPARENCY 50
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    
+    PROCESSING "LABEL_NO_CLIP=True"
+    LABELITEM "secteur"
+    
+    CLASS
+       NAME 'tmp_secteur' 
+       STYLE
+         SYMBOL 0 
+         SIZE 7.0 
+         OUTLINECOLOR 255 255 0
+         COLOR 39 187 255
+       END
+	   LABEL 
+	      FONT FreeSerif
+	      TYPE truetype
+	      SIZE 10
+	      COLOR 0 0 0
+	      ANGLE 0
+	      BUFFER 1
+	      POSITION cc
+	      FORCE true
+	      ANTIALIAS true
+	      PARTIALS true
+	   END 
+    END
+  END
+  
+  # Couche des arrondissements temporaires chargé  
+  LAYER
+    NAME 'tmp_arrondissement'
+    TYPE POLYGON
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    #EXTENT -113933.598723 902182.897546 1649113.592409 1918094.845249
+    #DATA 'PG:dbname='gisdass' host='localhost' port='5432' user='postgres' password='lk2xFNyA' |layername=tmp_parcelle'
+    CONNECTIONTYPE postgis
+    CONNECTION "user=postgres password=lk2xFNyA dbname=gisdass host=localhost"
+    DATA "the_geom from tmp_arr using srid=4326 using unique gid"
+    METADATA
+      'ows_title' 'tmp_arrondissement'
+    END
+    STATUS ON
+    TRANSPARENCY 50
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    
+    PROCESSING "LABEL_NO_CLIP=True"
+    LABELITEM "arr"
+    CLASS
+       NAME 'tmp_arrondissement' 
+       NAME 'arrondissement' 
+       STYLE
+            COLOR 244 243 0     	
+       END
+       STYLE 
+            OUTLINECOLOR 187 187 183
+            WIDTH 1.3
+            PATTERN 40 10 40 10 END    		
+       END
+	   LABEL 
+	      FONT FreeSerif
+	      TYPE truetype
+	      SIZE 10
+	      COLOR 0 0 0
+	      ANGLE 0
+	      BUFFER 1
+	      POSITION cc
+	      FORCE true
+	      ANTIALIAS true
+	      PARTIALS true
+	   END 
+    END
+  END
+END

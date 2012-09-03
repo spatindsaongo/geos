@@ -1,0 +1,7 @@
+/app/logs/*
+/app/cache/*
+/.settings/*
+/web/bundles/*
+/vendor/*
+/web/js/openlayers/*
+

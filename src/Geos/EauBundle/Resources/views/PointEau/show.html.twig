@@ -1,0 +1,34 @@
+{% extends 'GeosMainBundle::layout.html.twig' %}
+{% block content %}
+<h2 class="page-header">Vue détaillée du point d'eau
+	<div style="float: right;" class="btn-group">
+		<a class="btn" href="{{ path('pointeau') }}">
+			<i class=" icon-arrow-left"></i>
+			Retour à liste
+		</a>
+	    <a class="btn" href="{{ path('pointeau_edit', { 'id': entity.id }) }}">
+	    	<i class=" icon-edit"></i>
+	        Modifier
+	    </a>
+	   	<a class="btn" href="">
+	    	<i class=" icon-print"></i>
+	        imprimer
+	    </a>
+    </div>
+</h2>
+</div>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="well span4">
+	    <p><strong>Identifant : </strong>{{ entity.id }}</p>
+	    <p><strong>Date de M.e.s: </strong>{{ entity.dateMes|date('d/m/Y') }}</p>
+	    <p><strong>Zone: </strong>{{ entity.zoi }}</p>
+	    <p><strong>Type de point d'eau: </strong>{{ entity.peType }}</p>
+    </div>
+    <div class="span7" >
+    	{% include 'GeosGeoEntityBundle::map00.html.twig' %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+<h1>Agent edit</h1>
+
+<form action="{{ path('agent_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+    <p>
+        <button type="submit">Edit</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('agent') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('agent_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+
+{% extends 'GeosMainBundle::layout.html.twig' %}
+{% block content %}
+<h2 class="page-header">Modifier l'effectif des agents</h2>
+
+<form class="form-horizontal" action="{{ path('agent_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+  <fieldset>
+  	  	
+  	 <div class="control-group">
+      <label class="control-label" for="input01">Centre de sante</label>
+      <div class="controls">
+        {{ form_widget(edit_form.centreSante) }}
+      </div>
+    </div>
+  	<div class="control-group">
+      <label class="control-label" for="input01">Profession</label>
+      <div class="controls">
+        {{ form_widget(edit_form.libelle) }}
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="input01">Nombre</label>
+      <div class="controls">
+        {{ form_widget(edit_form.nombre) }}
+      </div>
+    </div>
+    <div class="form-actions">
+    	<button class="btn btn-primary" type="submit" class="input-xlarge" >Enregistrer</button>
+    	<a class="btn" href="{{ path('centrecentre_show', { 'id': csId }) }}"><i class=" icon-arrow-left"></i>Annuler</a>
+    </div>
+  </fieldset>
+</form>
+{% endblock %}

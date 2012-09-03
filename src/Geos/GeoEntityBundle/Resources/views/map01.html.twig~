@@ -1,0 +1,93 @@
+<div id = "{{ blocId }}" style="height : 450px"> 
+<script type="text/javascript">
+
+
+	/*Paramètres d'affichage de la carte*/
+	
+	var center = new Array(0,0),statCovers{{ id }} = new Array(),scale=1,blocId,map{{ id }};
+	
+	/*Initialisation des variables de la carte*/
+	
+	{% if blocId is defined %}blocId = '{{ blocId }}';{% endif %}
+	
+	/*Test de la variable mapcenter*/		
+   	{%  if mapcenter.lon is defined and mapcenter.lat is defined  %}
+  	   	center = new Array({{ mapcenter.lon }},{{ mapcenter.lat }});
+  	{% endif %}  	  	
+  	 	
+  	/*Les statCovers*/
+  	 {%  if statCovers is defined %}
+  		{%  for key,cover in statCovers %}  			
+	  	    {% autoescape false %}		  	    
+	  	  		statCovers{{ id }}[{{ key }}] = ['{{ cover.coord }}','{{ cover.colorCode }}','{{ cover.zoneName }}'];
+	  	    {% endautoescape %}
+  	   	{%  endfor %}  	    	
+  	{% endif %}
+
+  	 /* Le scale */
+  	 {% if scale is defined  %}scale = {{ scale }}; {% endif %}  	 	
+  	 	
+    //statmap(statCovers, blocId, center, scale);
+
+	var srcproj = new OpenLayers.Projection("EPSG:4326");
+
+
+		// Map initialisation	
+		map{{ id }} = new OpenLayers.Map(blocId,
+									{	controls: [
+										new OpenLayers.Control.Navigation(),
+										new OpenLayers.Control.PanZoomBar(),
+										new OpenLayers.Control.LayerSwitcher({'ascending':false,}),
+										new OpenLayers.Control.Permalink(),
+										new OpenLayers.Control.ScaleLine(),
+										new OpenLayers.Control.Permalink('permalink'),
+										new OpenLayers.Control.MousePosition(),
+										new OpenLayers.Control.OverviewMap(),
+										],										 
+									units: 'm',
+									} );
+		var osm = new OpenLayers.Layer.OSM();			
+		map{{id}}.addLayer(osm);
+
+		if(statCovers{{ id }}!=''){
+			var crs = new OpenLayers.Layer.Vector('Covers');
+			var features = new Array();	
+			var l = statCovers{{ id }}.length;
+			
+			for (var i = 0; i < l; i++) {
+		
+				var geometry = new OpenLayers.Geometry.fromWKT(statCovers{{ id }}[i][0]) ;	
+				geometry.transform(srcproj, map.getProjectionObject());			
+				var style = {fill:'true',
+							 fillOpacity:'0.5',
+							 fillColor:statCovers{{ id }}[i][1],
+							 stroke:'true',
+							 strokeOpacity:'1',
+							 strokeColor:'#222222',
+							 strokeWidth:'0.5',
+							 label:statCovers{{ id }}[i][2],
+							 labelAlign:'m',
+							 fontSize:'12'};
+				var feature = new OpenLayers.Feature.Vector(geometry,{},style);		    
+			    
+			    features.push(feature);            
+			}	
+			
+	
+			
+			crs.addFeatures(features); 
+			
+			alert(crs);
+			map{{id}}.addLayer(crs);
+		}
+		
+		// End of covers
+		
+		//MapCenter
+		
+		var center = new OpenLayers.LonLat(12.2158, 1.3105).transform(new OpenLayers.Projection("ESPG:4326"), map{{id}}.getProjectionObject());
+		map{{id}}.setCenter(center, 10);
+
+    	
+</script> 
+</div>

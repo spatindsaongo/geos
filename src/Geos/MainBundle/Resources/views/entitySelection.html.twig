@@ -1,0 +1,7 @@
+<h2 class="page-header">Gestion de données
+<form style="float: right;" class="form-inline" action="{{ path('_entityManagement') }}" method="post" {{ form_enctype(form) }}>
+	{{ form_widget(form.entityType,{"attr":{"class":"choice input-medium"}}) }}
+	{{ form_widget(form.entity,{"attr":{"class":"choice-child input-medium"}}) }}
+    <button type="submit" class="btn">Valider</button>
+</form>
+</h2>

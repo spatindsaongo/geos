@@ -1,0 +1,49 @@
+{% extends 'GeosMainBundle::entityManagement.html.twig' %}
+{% block entityManagement %}
+<h2 class="page-header" >Province: {{ pagination.totalCount }} élements dans la liste
+	<div style="float: right;" class="btn-group">
+	<a class="btn btn-primary" href="{{ path('province_new') }}">
+		<i class="icon-plus-sign icon-white"></i>
+		ajouter
+	</a>
+	<a class="btn" href="#">
+    	<i class=" icon-print"></i>
+        imprimer
+    </a>
+    </div>
+
+</h2>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+        	<th>{{ pagination.sortable('Id', 'province.id')|raw }}</th>
+        	<th>{{ pagination.sortable('Nom', 'province.nom')|raw }}</th>
+        	<th>{{ pagination.sortable('Region', 'province.region.nom')|raw }}</th>
+            <th>Actions</th>
+	    </tr>
+    </thead>
+    <tbody>
+    {% for entity in pagination %}
+        <tr>
+        	<td><a href="{{ path('province_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.nom }}</td>
+            <td>{{ entity.region }}</td>
+            <td>
+            	<p>
+	                <a href="{{ path('province_show', { 'id': entity.id }) }}" title="Voir">
+	                <i class="icon-eye-open"></i>
+	                </a>
+	                <a href="{{ path('province_edit', { 'id': entity.id }) }}" title="Modifier">
+	                <i class="icon-edit"></i>
+	                </a>
+	               	<a href="{{ path('province_delete', { 'id': entity.id }) }}" title="Supprimer">
+	                <i class="icon-trash"></i>
+	                </a>
+                </p>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{{ pagination.render()|raw }}
+{% endblock %}

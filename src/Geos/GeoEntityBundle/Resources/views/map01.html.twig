@@ -1,0 +1,40 @@
+<div id = "{{ blocId }}" style="height : 550px"> 
+<script type="text/javascript">
+
+(function (){
+	/*Paramètres d'affichage de la carte*/
+	
+	var center = new Array(0,0);
+	var statCovers = new Array();
+	var blocId;
+	var scale;
+	
+
+	/*Initialisation des variables de la carte*/
+	
+	{% if blocId is defined %}blocId = '{{ blocId }}';{% endif %}
+	
+	/*Test de la variable mapcenter*/		
+   	{%  if mapcenter.lon is defined and mapcenter.lat is defined  %}
+  	   	center = new Array({{ mapcenter.lon }},{{ mapcenter.lat }});
+  	{% endif %}  	  	
+  	 	
+  	/*Les statCovers*/
+  	 {%  if statCovers is defined %}
+  		{%  for key,cover in statCovers %}  			
+	  	    {% autoescape false %}		  	    
+	  	  		statCovers[{{ key }}] = ['{{ cover.coord }}','{{ cover.colorCode }}','{{ cover.zoneName }}'];
+	  	    {% endautoescape %}
+  	   	{%  endfor %}  	    	
+  	{% endif %}
+
+  	 /* Le scale */
+  	 {% if scale is defined  %} scale = {{ scale }}; {% endif %}  	 	
+  	 	
+    statmap(statCovers, blocId, center, scale);
+
+})();
+
+    	
+</script> 
+</div>

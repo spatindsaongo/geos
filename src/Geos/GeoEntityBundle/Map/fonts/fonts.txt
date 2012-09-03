@@ -1,0 +1,4 @@
+FreeSerif	FreeSerif.ttf
+UbuntuB	UbuntuB.ttf
+LiberationSansBold	LiberationSansBold.ttf
+

@@ -1,0 +1,27 @@
+
+A Faire
+
+
+
+03-05-2012
+
+Problème de mis à jour des coordonnées d'un point d'eau. 
+
+GeoEntityBundle
+	- Poi: 
+		- Description de l'entité : fait
+		- Création de la table : fait
+		- Géneration du crud : Pas besoin
+	- Zoi: 
+		- Description de l'entité : fait
+		- Création de la table : fait
+		- Géneration du crud : Pas besoin		
+
+EauBundle
+	- PointEau : 
+		- Description de l'entité : fait
+		- Création de la table : fait
+		- Géneration du crud : fait
+		- 
+	- 
+	

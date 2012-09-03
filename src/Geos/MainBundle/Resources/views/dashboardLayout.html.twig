@@ -1,0 +1,29 @@
+{% extends 'GeosMainBundle::layout.html.twig'%}
+{% block content %}
+<div class="row-fluid">
+	<div class = "span3">
+		<div class="well sidebar-nav">
+			<ul class="nav nav-list">
+				<li class="nav-header">Indicateurs</li>
+				<li class="divider"></li>
+				<li class="nav-header">Eau Potable</li>
+				<li><a href="{{ path('pointeau_nbre_branchement_page') }}">Nombre de branchement</a></li>
+				<li><a href="{{ path('pointeau_nbre_borne_fontaine_page') }}">Nombre de Borne fontaine</a></li>
+				<li><a href="{{ path('pointeau_nbre_pem_page') }}">Nombre de PEM</a></li>
+				<li><a href="{{ path('pointeau_nbre_pmh_page') }}">Nombre de PMH</a></li>
+				<li class="divider"></li>
+				<li class="nav-header">Assainissement</li>
+				<li><a href="{{ path('pointeau_nbre_branchement_page') }}">Nombre de latrine familiale</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="span9">
+	{% block dashboard %}
+      <div class="hero-unit">
+        <h2>Tableaux de bord </h2>
+        	<p>Cette fonctionnalité du système presente les indicateurs sur l'accès aux services sociaux de base</p>
+      </div>
+    {% endblock %}
+    </div>
+</div>
+{% endblock %}

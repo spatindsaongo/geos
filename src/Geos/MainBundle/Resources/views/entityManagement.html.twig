@@ -1,0 +1,37 @@
+{% extends 'GeosMainBundle::layout.html.twig'%}
+{% block content %}
+<div class="row-fluid">
+	<div class="span3">
+		<div class="well sidebar-nav">
+			<ul class="nav nav-list">
+				<li class="nav-header">Entités Géolocalisées</li>
+				<li class="divider"></li>
+				<li class="nav-header">Zone d'interêt</li>
+				<li title="Region"><a href="{{ path('region') }}">Regions</a></li>
+				<li><a href="{{ path('province') }}">Provinces</a></li>
+				<li><a href="{{ path('commune') }}">Communes</a></li>
+				<li><a href="{{ path('section') }}">Sections</a></li>
+				<li><a href="{{ path('lot') }}">Lots</a></li>
+				<li><a href="{{ path('parcelle') }}">Parcelles</a></li>
+				<li class="divider"></li>
+				<li class="nav-header">Point d'interêt</li>
+				<li><a href="{{ path('centreformation') }}">Centres de formation</a></li>
+				<li><a href="{{ path('centresante') }}">Centres de santé</a></li>
+				<li><a href="{{ path('ouvautonome') }}">Ouvrage d'assainissement autonomes</a></li>
+				<li><a href="{{ path('pointeau') }}">Points d'eau</a></li>				
+				<li><a href="{{ path('prix') }}">Prix des Denrées sur les marchés</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="span9">
+	{% block entityManagement %}
+{#% include 'GeosMainBundle::entitySelection.html.twig' %#}
+<!-- Pas de modification prevue -->
+      <div class="hero-unit">
+        <h2>Gestion des données</h2>
+        	<p>Cette fonctionnalité du système permet l'ajout, la mise à jour et la suppression des différentes informations géolocalisées</p>
+      </div>
+      {% endblock %}
+    </div>
+</div>
+{% endblock %}

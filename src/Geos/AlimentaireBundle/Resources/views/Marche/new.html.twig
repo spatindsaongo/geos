@@ -1,0 +1,55 @@
+{% extends 'GeosMainBundle::layout.html.twig' %}
+{% block content %}
+<h2 class="page-header">Ajouter un marche</h2>
+
+<form class="form-horizontal" action="{{ path('marche_create') }}" method="post" {{ form_enctype(form) }}>
+  <fieldset>
+  	<div class="control-group">
+      <label class="control-label" for="input01">Nom</label>
+      <div class="controls">
+        {{ form_widget(form.nom,{"attr":{"class":"input-xlarge"}}) }}
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="input01">Commune</label>
+      <div class="controls">
+        {{ form_widget(form.zoi)}}
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="input01">Publié</label>
+      <div class="controls">
+        {{ form_widget(form.status,{"attr":{"class":"input-xlarge"}}) }}
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="input01">Coordonnées géographiques</label>
+      <div class="controls">
+        {{ form_widget(form.geometrie,{"attr":{"class":"input-xlarge"}}) }}
+        <p class="help-block">Ex : (4.34 2.5)</p>
+      </div>
+    </div>
+    <div class="form-actions">
+    	<button class="btn btn-primary" type="submit" class="input-xlarge" >Enregistrer</button>
+    	<a class="btn" href="{{ path('marche') }}"><i class=" icon-arrow-left"></i>Retourner à la liste</a>
+    </div>
+  </fieldset>
+</form>
+
+<script type="text/javascript">	        
+	var loc =  '{{ form_widget(form.zoi) }} ';		
+
+ 	$('.zone').html('<label class="control-label" for="input01">Commune</label><div class="controls">'+loc+'</div>').show();
+ 	$('#location3').hide();
+ 	$('#location3').children('select').removeAttr('required');
+ 	$('#location4').hide();
+ 	$('#location4').children('select').removeAttr('required');
+ 	$('#location5').hide();
+ 	$('#location5').children('select').removeAttr('required');
+ 	$("#location1").children('select').html("<option value = ''> choisir une province</option>").show();
+ 	$("#location2").children('select').html("<option value = ''> choisir une commune</option>").show();
+ 	$("#location3").children('select').html("<option value = ''> choisir une section</option>").show();
+ 	$("#location4").children('select').html("<option value = ''> choisir un lot</option>").show();
+ 	$("#location5").children('select').html("<option value = ''> choisir une parcelle</option>").show();
+</script>
+{% endblock %}

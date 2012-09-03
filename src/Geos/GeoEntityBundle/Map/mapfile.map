@@ -1,0 +1,442 @@
+#Mapfile version 0.0
+# @auteur SAM Patindsaongo Robert
+
+MAP
+	NAME "GeosMap"
+	
+	# Map image size
+	SIZE 500 500
+	UNITS kilometers
+
+	EXTENT -113933.598723 902182.897546 1649113.592409 1918094.845249
+	
+  	FONTSET './fonts/fonts.txt'
+  	#SYMBOLSET './symbols/symbols.txt'
+  
+	SYMBOL
+		NAME "circle"
+		TYPE ellipse
+		FILLED true
+		POINTS
+		0.5 0.5
+		END
+	END
+  
+	PROJECTION
+		'proj=longlat'
+    	'ellps=WGS84'
+    	'datum=WGS84'
+    	'no_defs'
+	END
+
+	# Background color for the map canvas -- change as desired
+	IMAGECOLOR 244 243 240
+	IMAGEQUALITY 95
+	IMAGETYPE png
+
+	OUTPUTFORMAT
+		NAME png
+		DRIVER 'GD/PNG'
+		MIMETYPE 'image/png'
+		IMAGEMODE RGBA
+		EXTENSION 'png'
+	END
+  	# Legend
+	LEGEND
+		IMAGECOLOR 255 255 255
+		STATUS ON
+		KEYSIZE 18 12
+		LABEL
+			TYPE BITMAP
+			SIZE MEDIUM
+			COLOR 0 0 89
+		END
+	END
+
+  # Web interface definition. Only the template parameter
+  # is required to display a map. See MapServer documentation
+	WEB
+	    # Set IMAGEPATH to the path where MapServer should
+	    # write its output.
+	    IMAGEPATH '/tmp/'
+	
+	    # Set IMAGEURL to the url that points to IMAGEPATH
+	    # as defined in your web server configuration
+	    IMAGEURL '/tmp/'
+	
+	    # WMS server settings
+	    METADATA
+		    'wms_title'           'QGIS-MAP'
+		    'wms_onlineresource'  'http://localhost/cgi-bin/mapserv?map=/var/www/geos/src/Geos/GeoEntityBundle/Map/mapfile.map'
+		    'wms_srs'             'EPSG:4326 EPSG:900913'
+	    END
+	
+	    #Scale range at which web interface will operate
+	    # Template and header/footer settings
+	    # Only the template parameter is required to display a map. See MapServer documentation
+	    TEMPLATE 'fooOnlyForWMSGetFeatureInfo'
+	END
+
+#
+#Les zones
+#
+
+# 00 Couche des Regions
+	LAYER
+	    NAME 'region'
+	    TYPE POLYGON
+	    DUMP true
+	    
+	    CONNECTIONTYPE postgis
+	    CONNECTION "user=postgres password=lk2xFNyA dbname=geos host=localhost"
+	    DATA "geometrie from (select z.id as id, z.geometrie as geometrie, z.type as type, r.nom from zoi z, region r where r.id = z.id) as new_table  using srid=-1 using unique id"
+	    
+	    METADATA
+		    'wms_title' 'region'
+		    'wms_srs'   'EPSG:4326'
+	    END
+	    
+	    STATUS OFF   
+	    
+	    PROCESSING "LABEL_NO_CLIP=True"
+	    
+	    #MAXSCALEDENOM 100000000000  
+	   	#MINSCALEDENOM 100000000
+	   	
+	    OPACITY 100
+	    
+	    LABELITEM "nom"
+	    #LABELMAXSCALEDENOM 100000000000
+	    #LABELMINSCALEDENOM 1000000000
+	        
+	    CLASS
+	       	NAME 'region' 
+	       	STYLE 
+		        OUTLINECOLOR 154 144 124
+		        WIDTH 3.0             
+	       	END
+	        LABEL
+		       	ALIGN center
+			    FONT LiberationSansBold
+			    TYPE truetype
+			    SIZE 14
+			    OFFSET 0 0
+			    COLOR 0 0 0
+			    ANGLE 0
+			    BUFFER 1
+			    POSITION auto
+			    FORCE true
+			    ANTIALIAS true
+			    PARTIALS true
+		    END
+	    END    
+	END
+	
+	
+	# 00 Couche des Province
+	LAYER
+	    NAME 'province'
+	    TYPE POLYGON
+	    DUMP true
+	    
+	    CONNECTIONTYPE postgis
+	    CONNECTION "user=postgres password=lk2xFNyA dbname=geos host=localhost"
+	    DATA "geometrie from (select z.id as id, z.geometrie as geometrie, z.type as type, p.nom from zoi z, province p where p.id = z.id) as new_table  using srid=-1 using unique id"
+	    
+	    METADATA
+		    'wms_title' 'province'
+		    'wms_srs'   'EPSG:4326'
+	    END
+	    
+	    STATUS OFF   
+	    
+	    PROCESSING "LABEL_NO_CLIP=True"
+	    
+	    #MAXSCALEDENOM 5000000  
+	   	#MINSCALEDENOM 5000000 
+	   	
+	    OPACITY 100
+	    
+	    LABELITEM "nom"
+	    #LABELMAXSCALEDENOM 100000000000
+	    #LABELMINSCALEDENOM 1000000000
+	        
+	    CLASS
+	       	NAME 'province' 
+	       	STYLE 
+		        OUTLINECOLOR 154 144 124
+		        WIDTH 2.0             
+	       	END
+	        LABEL
+		       	ALIGN center
+			    FONT UbuntuB
+			    TYPE truetype
+			    SIZE 12
+			    COLOR 0 0 0
+			    OFFSET -10 0
+			    ANGLE 0
+			    BUFFER 1
+			    POSITION auto
+			    FORCE true
+			    ANTIALIAS true
+			    PARTIALS true
+		    END
+	    END    
+	END
+	
+	# 00 Couche des Province
+	LAYER
+	    NAME 'commune'
+	    TYPE POLYGON
+	    DUMP true
+	    
+	    CONNECTIONTYPE postgis
+	    CONNECTION "user=postgres password=lk2xFNyA dbname=geos host=localhost"
+	    DATA "geometrie from (select z.id as id, z.geometrie as geometrie, z.type as type, c.nom from zoi z, commune c where c.id = z.id) as new_table  using srid=-1 using unique id"
+	    
+	    METADATA
+		    'wms_title' 'commune'
+		    'wms_srs'   'EPSG:4326'
+	    END
+	    
+	    STATUS OFF   
+	    
+	    PROCESSING "LABEL_NO_CLIP=True"
+	    
+	    #MAXSCALEDENOM 100000000000  
+	   	#MINSCALEDENOM 100000000
+	   	
+	    OPACITY 100
+	    
+	    LABELITEM "nom"
+	    MAXSCALEDENOM 10000000000  
+	   	MINSCALEDENOM 1000000000
+	        
+	    CLASS
+	       	NAME 'commune' 
+	       	STYLE 
+				COLOR 197 183 165 	
+		        OUTLINECOLOR 154 144 124
+		        WIDTH 1.0         
+		        LINECAP butt
+				PATTERN 100 100 END            
+	       	END
+	        LABEL
+		       	ALIGN center
+			    FONT FreeSerif
+			    TYPE truetype
+			    SIZE 10
+			    COLOR 0 0 0
+			    OFFSET -10 0
+			    ANGLE 0
+			    BUFFER 1
+			    POSITION auto
+			    FORCE true
+			    ANTIALIAS true
+			    PARTIALS true
+		    END
+	    END    
+	END
+	
+#
+#Les points
+#
+
+# 00 Couche des pointeau
+	LAYER
+	    NAME 'pointeau'
+	    TYPE POINT
+	    DUMP true
+	    
+	    TEMPLATE fooOnlyForWMSGetFeatureInfo
+	    
+	    CONNECTIONTYPE postgis
+	    CONNECTION "user=postgres password=lk2xFNyA dbname=geos host=localhost"
+	    DATA "geometrie from (select p.id as id, pe.petype as type, p.geometrie as geometrie from poi p, pointeau pe where p.id = pe.id and p.status = 'oui' ) as newtable using srid=-1 using unique id"
+	    
+	    METADATA
+		    'wms_title' 'pointeau'
+		    'wms_srs'  'EPSG:4326'
+	    END
+	    
+	    STATUS OFF
+	    
+	    PROJECTION
+			"init=epsg:4326"
+		END
+		
+	    PROCESSING "LABEL_NO_CLIP=True"
+
+	    OPACITY 100
+	    
+	    LABELITEM "type"
+	   
+		CLASSITEM 'type'
+		    CLASS
+		      NAME 'default'
+		      EXPRESSION 'nom' 
+		      STYLE
+		        SYMBOL "circle"
+		         SIZE 3.0 
+		         OUTLINECOLOR 0 0 0
+		         COLOR 127 42 212
+		       END
+		     LABEL 
+		      FONT FreeSerif
+		      TYPE truetype
+		      SIZE 12
+		      COLOR 0 0 0
+		      ANGLE 0
+		      BUFFER 1
+		      POSITION cc
+		      FORCE true
+		      ANTIALIAS true
+		      PARTIALS true
+		     END 
+		    END
+		    CLASS
+		      NAME 'type = branchement' 
+		      EXPRESSION 'branchement' 
+		      STYLE
+		        SYMBOL "circle"
+		         SIZE 6.0 
+		         OUTLINECOLOR 0 0 0
+		         COLOR 212 250 190
+		       END
+		     LABEL 
+		      FONT FreeSerif
+		      TYPE truetype
+		      SIZE 12
+		      COLOR 0 0 0
+		      ANGLE 0
+		      BUFFER 1
+		      POSITION cc
+		      FORCE true
+		      ANTIALIAS true
+		      PARTIALS true
+		     END 
+		    END
+		    CLASS
+		      NAME 'type = pmb' 
+		      EXPRESSION 'pmh' 
+		      STYLE
+		        SYMBOL "circle"
+		         SIZE 10.0
+		         OUTLINECOLOR 0 0 0
+		         COLOR 231 251 171
+		       END
+		     LABEL 
+		      FONT FreeSerif
+		      TYPE truetype
+		      SIZE 12
+		      COLOR 0 0 0
+		      ANGLE 0
+		      BUFFER 1
+		      POSITION cc
+		      FORCE true
+		      ANTIALIAS true
+		      PARTIALS true
+		     END 
+		    END
+		END 
+	END
+	
+	# 00 Couche des pointeau
+	LAYER
+	    NAME 'ouvautonome'
+	    TYPE POINT
+	    DUMP true
+	    
+	    TEMPLATE fooOnlyForWMSGetFeatureInfo
+	    
+	    CONNECTIONTYPE postgis
+	    CONNECTION "user=postgres password=lk2xFNyA dbname=geos host=localhost"
+	    DATA "geometrie from (select p.id as id, oa.ouvtype as type, p.geometrie as geometrie from poi p, ouvautonome oa where p.id = oa.id and p.status = 'oui') as newtable using srid=-1 using unique id"
+	    
+	    METADATA
+		    'wms_title' 'ouvautonome'
+		    'wms_srs'  'EPSG:4326'
+	    END
+	    
+	    STATUS OFF
+	    
+	    PROJECTION
+			"init=epsg:4326"
+		END
+		
+	    PROCESSING "LABEL_NO_CLIP=True"
+
+	    OPACITY 100
+	    
+	    LABELITEM "type"
+	   
+		CLASSITEM 'type'
+		    CLASS
+		      NAME 'default'
+		      EXPRESSION 'nom' 
+		      STYLE
+		        SYMBOL "circle"
+		         SIZE 3.0 
+		         OUTLINECOLOR 0 0 0
+		         COLOR 127 42 212
+		       END
+		     LABEL 
+		      FONT FreeSerif
+		      TYPE truetype
+		      SIZE 12
+		      COLOR 0 0 0
+		      ANGLE 0
+		      BUFFER 1
+		      POSITION cc
+		      FORCE true
+		      ANTIALIAS true
+		      PARTIALS true
+		     END 
+		    END
+		    CLASS
+		      NAME 'type = vip' 
+		      EXPRESSION 'vip' 
+		      STYLE
+		        SYMBOL "circle"
+		         SIZE 6.0 
+		         OUTLINECOLOR 0 0 0
+		         COLOR 212 250 190
+		       END
+		     LABEL 
+		      FONT FreeSerif
+		      TYPE truetype
+		      SIZE 12
+		      COLOR 0 0 0
+		      ANGLE 0
+		      BUFFER 1
+		      POSITION cc
+		      FORCE true
+		      ANTIALIAS true
+		      PARTIALS true
+		     END 
+		    END
+		    CLASS
+		      NAME 'type = latrine' 
+		      EXPRESSION 'latrine' 
+		      STYLE
+		        SYMBOL "circle"
+		         SIZE 10.0
+		         OUTLINECOLOR 0 0 0
+		         COLOR 231 251 171
+		       END
+		     LABEL 
+		      FONT FreeSerif
+		      TYPE truetype
+		      SIZE 12
+		      COLOR 0 0 0
+		      ANGLE 0
+		      BUFFER 1
+		      POSITION cc
+		      FORCE true
+		      ANTIALIAS true
+		      PARTIALS true
+		     END 
+		    END
+		END 
+	END
+END

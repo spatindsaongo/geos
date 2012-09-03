@@ -1,0 +1,18 @@
+{% extends 'GeosMainBundle::layout.html.twig' %}
+{% block content %}
+<h2 class="page-header">Modifier </h2>
+
+<form class="form-horizontal" action="{{ path('', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+  <fieldset>
+    <div class="control-group">
+      <label class="control-label" for="input01"></label>
+      <div class="controls" >
+      </div>
+    </div>
+    <div class="form-actions">
+    	<button class="btn btn-primary" type="submit" class="input-xlarge" >Enregistrer</button>
+    	<a class="btn" href="{{ path('pointeau') }}"><i class=" icon-arrow-left"></i>Retourner à la liste</a>
+    </div>
+  </fieldset>
+</form>
+{% endblock %}
